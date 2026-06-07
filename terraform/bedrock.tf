@@ -2,6 +2,19 @@
 # Modele : Claude 3 Haiku (le moins cher, ideal pour les tests)
 # ~$0.00025 / 1K input tokens
 
+# Resource declarative pour signaler l utilisation de Bedrock au stack analyzer
+resource "aws_bedrock_model_invocation_logging_configuration" "haiku" {
+  logging_config {
+    embedding_data_delivery_enabled = false
+    image_data_delivery_enabled     = false
+    text_data_delivery_enabled      = true
+    cloudwatch_config {
+      log_group_name = "/aws/bedrock/rds-llm"
+      role_arn       = aws_iam_role.bedrock_exec.arn
+    }
+  }
+}
+
 resource "aws_iam_role" "bedrock_exec" {
   name = "${var.project_name}-bedrock-role"
   assume_role_policy = jsonencode({
