@@ -18,11 +18,6 @@ output "s3_bucket_arn" {
   value       = aws_s3_bucket.exports.arn
 }
 
-output "rds_url_secret_arn" {
-  description = "ARN of the Secrets Manager secret containing RDS_URL"
-  value       = aws_secretsmanager_secret.rds_url.arn
-}
-
 output "app_iam_role_arn" {
   description = "ARN of the IAM role for the application"
   value       = aws_iam_role.app.arn
